@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Cadastro de Usuários</title>
+ <h:outputStylesheet library="css" name="main.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Nomes</h1>
+
+        <h:form id="cadastroForm">
+            <h:outputLabel for="inputNome" value="Nome:"/>
+            <h:inputText id="inputNome" value="#{pessoa.nome}" styleClass="input-field" required="true" requiredMessage="O campo Nome é obrigatório!"/>
+            
+            <h:message for="inputNome" style="color: red;"/>
+            
+            <br/><br/>
+            
+            <h:commandButton value="Cadastrar" action="#{pessoa.adicionarNome}" styleClass="action-button">
+                <f:ajax execute="@form" render="listaNomes messages" />
+            </h:commandButton>
+            
+            <h:messages id="messages" style="color: blue; margin-top: 10px;"/>
+        </h:form>
+
+        <div class="name-list">
+            <h2>Nomes Cadastrados:</h2>
+            <h:panelGroup id="listaNomes">
+                <h:outputText value="Nenhum nome cadastrado ainda." rendered="#{empty pessoa.nomesCadastrados}"/>
+                
+                <h:form> 
+                    <ui:repeat value="#{pessoa.getNomesCadastrados()}" var="nomeItem">
+                        <div class="name-item">
+                            <h:outputText value="#{nomeItem}" />
+                        </div>
+                    </ui:repeat>
+                </h:form>
+            </h:panelGroup>
+        </div>
+    </div>
+</body>
+</html>
